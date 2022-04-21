@@ -1,30 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import MessageIncoming from '../MessageIncoming';
-import MessageSended from '../MessageSended';
+import MessageIncoming from "../MessageIncoming";
+import MessageSended from "../MessageSended";
 import socket from "../../providers/socket";
 
-type Chat = {
-  name: string,
-  message: string,
-}
+type ChatProps = {
+  name: string;
+  message: string;
+};
 
-const Messages: React.FC = () => {
-  const [chat, setChat] = useState<Chat[]>([]);
+type MessagesProps = {
+  userName?: string;
+};
+
+const Messages: React.FC<MessagesProps> = ({ userName = "Teste" }) => {
+  const [chat, setChat] = useState<ChatProps[]>([]);
 
   useEffect(() => {
-    socket.on('message', ({ name, message }) => {
-      setChat([...chat, { name, message }])
-    })
-  }, [])
+    socket.on("message", ({ name, message }) => {
+      setChat([...chat, { name, message }]);
+    });
+  });
 
   return (
     <div className="grid w-full">
-      <MessageIncoming name="Nome" message="Primeira mensagem" time="22:37" />
-      <MessageIncoming message="Segunda mensagem" time="22:39" />
-      <MessageSended message="Terceira mensagem" time="23:03" />
+      {chat.map(({ name, message }, index) => (
+        <React.Fragment key={`message-${index}`}>
+          {userName === name ? (
+            <MessageSended message={message} time="22:37" />
+          ) : (
+            <MessageIncoming name={name} message={message} time="22:37" />
+          )}
+        </React.Fragment>
+      ))}
     </div>
   );
-}
+};
 
 export default Messages;
