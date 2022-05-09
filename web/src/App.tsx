@@ -1,15 +1,17 @@
-import Container from './components/Container';
-import Messages from './components/Messages';
-import MessageField from './components/MessageField';
+import Chat from "./pages/Chat";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <Container>
-        <Messages />
-        <MessageField />
-      </Container>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Chat />} />
+        <Route path="login" element={<Login />} />
+        <Route path="logout" element={<Logout />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

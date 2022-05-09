@@ -7,7 +7,7 @@ const MessageField: React.FC = () => {
   const { register, handleSubmit } = useForm();
 
   const submitForm = handleSubmit(({ message }) => {
-    socket.emit('message', { name: "Teste", message });
+    socket.emit('message', { message });
   });
 
   return (
@@ -20,6 +20,7 @@ const MessageField: React.FC = () => {
         type="text"
         placeholder="Mensagem"
         className="w-full bg-transparent focus:outline-none"
+        autoComplete="off"
         {...register("message", { required: true })}
       />
       <button type="submit" className="text-gray-600 text-xl pl-1">
