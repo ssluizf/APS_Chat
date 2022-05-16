@@ -75,7 +75,7 @@ app.post("/auth/register", async (req, res) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    return serverResponse(422, "O email já possui cadastro!");
+    return serverResponse(422, "Este email já possui cadastro!");
   }
 
   const salt = await bcrypt.genSalt(10);
