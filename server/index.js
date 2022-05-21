@@ -8,17 +8,12 @@ const jwt = require("jsonwebtoken");
 
 const User = require("./models/User");
 const Message = require("./models/Message");
-const checkToken = require("./middlewares/checkToken");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 const http = require("http").createServer(app);
-
-const dbUser = process.env.DB_USER;
-const dbPass = process.env.DB_PASS;
-const dbUrl = `mongodb+srv://${dbUser}:${dbPass}@cluster0.bxgmu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 const io = socketio(http, {
   cors: {
@@ -150,6 +145,10 @@ app.post("/auth/user", async (req, res) => {
     );
   }
 });
+
+const dbUser = process.env.DB_USER;
+const dbPass = process.env.DB_PASS;
+const dbUrl = `mongodb+srv://${dbUser}:${dbPass}@cluster0.bxgmu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 mongoose
   .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
