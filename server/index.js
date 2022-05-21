@@ -89,7 +89,17 @@ app.post("/auth/register", async (req, res) => {
 
   try {
     await user.save();
-    return serverResponse(201, "Usuário criado com sucesso!");
+    
+    const secret = process.env.SECRET;
+    const token = jwt.sign(
+      {
+        id: user._id,
+        name: user.name,
+      },
+      secret
+    );
+
+    return res.status(201).json({ msg: "Usuário criado com sucesso!", token });
   } catch {
     return serverResponse(
       500,
