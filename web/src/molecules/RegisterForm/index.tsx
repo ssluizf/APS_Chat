@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import clientWithoutToken from "../../providers/clientWithoutToken";
@@ -10,7 +9,6 @@ import Button from "../../atoms/Button";
 
 const RegisterForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
 
   const {
     register,
@@ -34,8 +32,7 @@ const RegisterForm: React.FC = () => {
       .then(async (response: any) => {
         const token = response.data.token;
         localStorage.setItem("token", token);
-
-        navigate("/");
+        window.location.href = "/";
       })
       .catch((err: any) => {
         setErrorMessage(err.response.data.msg);

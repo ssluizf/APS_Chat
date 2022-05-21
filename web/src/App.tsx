@@ -14,7 +14,7 @@ import Register from "./pages/Register";
 function App() {
   const PrivativeContainer = () => {
     const location = useLocation();
-    const isLoggedIn = !!localStorage.getItem("token");
+    const isLoggedIn = Boolean(localStorage.getItem("token"));
 
     return isLoggedIn ? (
       <Outlet />
